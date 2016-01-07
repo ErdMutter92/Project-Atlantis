@@ -1,5 +1,6 @@
 import React from 'react';
-import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Navbar, Nav, NavItem, Input} from 'react-bootstrap';
+import Search from 'react-search';
 
 var NavBar = React.createClass({
 	getInitialState: function () {
@@ -22,11 +23,16 @@ var NavBar = React.createClass({
 						<a href="#">Project Atlantis</a>
 					</Navbar.Brand>
 				</Navbar.Header>
-				<Nav>
-					<NavItem active={((this.state.active === "#/blogs") || (this.state.active === "#/")) ? true : false} eventKey={1} href="#/blogs">Blog</NavItem>
-					<NavItem active={(this.state.active === "#/stargate") ? true : false} eventKey={2} href="#/stargate">Stargate</NavItem>
-					<NavItem active={(this.state.active === "#/photos") ? true : false} eventKey={2} href="#/photos">Photos</NavItem>
-				</Nav>
+				<Navbar.Collapse>
+					<Nav>
+						<NavItem active={((this.state.active === "#/blogs") || (this.state.active === "#/")) ? true : false} eventKey={1} href="#/blogs">Blog</NavItem>
+						<NavItem active={(this.state.active === "#/stargate") ? true : false} eventKey={2} href="#/stargate">Stargate</NavItem>
+						<NavItem active={(this.state.active === "#/photos") ? true : false} eventKey={2} href="#/photos">Photos</NavItem>
+					</Nav>
+					<Navbar.Form pullRight>
+						<Input type="text" placeholder="Search"/>
+					</Navbar.Form>
+				</Navbar.Collapse>
 			</Navbar>
 		);
 	}
