@@ -5,7 +5,7 @@ import hdate from 'human-date';
 var Blogs = React.createClass({
 	render: function () {
 		return (
-			<div>
+			<div className="col-md-12">
 				<Entry
 					title={'Hello, World!'}
 					contents={'This is a test!'}

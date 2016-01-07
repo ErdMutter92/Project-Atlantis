@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import Blogs from './components/Blogs';
 import Menu from './components/Menu';
 import Stargates from './components/Stargates';
+import Photos from './components/Photos';
 
 var history = new createHashHistory();
 
@@ -18,6 +19,7 @@ ReactDOM.render(
 					<Route path="/" component={Blogs}></Route>
 					<Route path="/stargate" component={Stargates}></Route>
 					<Route path="/Blogs" component={Blogs}></Route>
+					<Route path="/Photos" component={Photos}></Route>
 				</Router>
 			</div>
 			<div className="col-md-4">

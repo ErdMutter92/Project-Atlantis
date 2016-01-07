@@ -25,6 +25,7 @@ var NavBar = React.createClass({
 				<Nav>
 					<NavItem active={((this.state.active === "#/blogs") || (this.state.active === "#/")) ? true : false} eventKey={1} href="#/blogs">Blog</NavItem>
 					<NavItem active={(this.state.active === "#/stargate") ? true : false} eventKey={2} href="#/stargate">Stargate</NavItem>
+					<NavItem active={(this.state.active === "#/photos") ? true : false} eventKey={2} href="#/photos">Photos</NavItem>
 				</Nav>
 			</Navbar>
 		);

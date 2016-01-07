@@ -36,7 +36,7 @@ var Menu = React.createClass({
 	},
 	render: function () {
 		return (
-			<div>
+			<div className="col-md-12">
 				<Online
 					players={this.state.population.online}
 					capacity={this.state.population.max} />
