@@ -29,7 +29,7 @@ var Menu = React.createClass({
 				uptime: undefined,
 				population: {
 					max: promise.data.maxplayers,
-					online: promise.data.users
+					online: (promise.data.users !== undefined) ? promise.data.users : []
 				}
 			});
 		}.bind(this));
