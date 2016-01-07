@@ -27,7 +27,7 @@ var Mojang = React.createClass({
 		return (
 			<Panel header={'Minecraft Server Status'}>
 				<p className={'mojang-status-'+this.state.status}>{statusMessage}</p>
-				<p>Learn more about the status of the mojang servers at thier <a href="https://help.mojang.com/">Offical Help Website</a>!</p>
+				<p>Learn more about the status of the mojang servers at their <a href="https://help.mojang.com/">Offical Help Website</a>!</p>
 				<p>{this.state.problem_servers.join(', ')}</p>
 			</Panel>
 		);
