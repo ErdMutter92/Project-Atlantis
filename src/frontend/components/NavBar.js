@@ -1,6 +1,5 @@
 import React from 'react';
 import {Navbar, Nav, NavItem, Input} from 'react-bootstrap';
-import Search from 'react-search';
 
 var NavBar = React.createClass({
 	getInitialState: function () {
