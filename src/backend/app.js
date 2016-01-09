@@ -7,7 +7,7 @@ var io  = require('socket.io');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('port', 8180);
+app.set('port', 3333);
 
 // Reads through all the js controllers and requires them.
 fs.readdirSync('./src/backend/controllers').forEach(function (file) {

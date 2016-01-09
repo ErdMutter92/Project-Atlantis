@@ -2,6 +2,12 @@ var StargateManager = require('../managers/Stargate');
 var ErrorManager = require('../managers/Error');
 
 module.exports.controller = function (app) {
+	app.all(function(req, res, next) {
+	  res.header("Access-Control-Allow-Origin", "*");
+	  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	  next();
+	});
+
 	app.get('/stargate', function (req, res) {
 		var type = req.query.type;
 		StargateManager.LoadStargateAddresses().then(function (doc) {
