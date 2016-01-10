@@ -1,5 +1,5 @@
 import React from 'react';
-import {Panel} from 'react-bootstrap';
+import {Panel, Table, Nav, NavItem} from 'react-bootstrap';
 
 var Online = React.createClass({
 	propTypes: {
@@ -20,15 +20,19 @@ var Online = React.createClass({
 	},
 	stringify: function (players) {
 		if (players.length <= 0) {
-			return 'There are currently no players online...';
+			return (<NavItem disabled>There are currently no players online...</NavItem>);
 		} else {
-			return players.join(', ');
+			return players.map(function(ele, index) {
+				return (<NavItem key={index} href={'#/profiles/'+ele}>{ele}</NavItem>);
+			});
 		}
 	},
 	render: function () {
 		return (
 			<Panel header={'Currently Online ('+ this.state.players.length +'/'+ this.state.max +')'}>
-				{this.stringify(this.state.players)}
+				<Nav bsStyle="pills" stacked>
+					{this.stringify(this.state.players)}
+			  </Nav>
 			</Panel>
 		);
 	}

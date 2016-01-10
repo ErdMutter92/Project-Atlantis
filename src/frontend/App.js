@@ -7,6 +7,7 @@ import Blogs from './components/Blogs';
 import Menu from './components/Menu';
 import Stargates from './components/Stargates';
 import Photos from './components/Photos';
+import Profiles from './components/Profiles';
 
 var history = new createHashHistory();
 
@@ -20,6 +21,8 @@ ReactDOM.render(
 					<Route path="/stargate" component={Stargates}></Route>
 					<Route path="/Blogs" component={Blogs}></Route>
 					<Route path="/Photos" component={Photos}></Route>
+					<Route path="/profiles/:user" component={Profiles}>
+					</Route>
 				</Router>
 			</div>
 			<div className="col-md-4">
