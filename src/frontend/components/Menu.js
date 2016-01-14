@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import ServerDataService from '../services/server';
 import Online from './status/Online';
 import Motd from './status/Motd';
+import Weather from './status/Weather';
 import Mojang from './status/Mojang';
 
 var Menu = React.createClass({
@@ -21,7 +22,7 @@ var Menu = React.createClass({
 		};
 	},
 	componentDidMount: function () {
-		axios.get('http://bleauweb.net/minecraft/api/status.php?version=0.2').then(function (promise) {
+		axios.get('http://api.bleauweb.net/server/status').then(function (promise) {
 			this.setState({
 				servername: promise.data.servername,
 				motd: promise.data.motd,

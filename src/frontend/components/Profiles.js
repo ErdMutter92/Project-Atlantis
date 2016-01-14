@@ -3,18 +3,35 @@ import Three from 'three';
 import MinecraftSkin from 'minecraft-skin';
 import axios from 'axios';
 import Stats from './profiles/Stats';
-import {Panel, Table, Well} from 'react-bootstrap';
+import Item from './profiles/Item';
+import InventoryManager from '../services/Inventory.js';
+import {Panel, Table, Well, Image, PageHeader} from 'react-bootstrap';
 
 var Profiles = React.createClass({
   getInitialState: function () {
     return {
       user: '',
       stats: {},
-      _stats: []
+      _stats: [],
+      armor: {
+        head: 'unknown',
+        chest: 'unknown',
+        legs: 'unknown',
+        feet: 'unknown'
+      }
     }
   },
   componentWillReceiveProps: function (nextProps) {
+    axios.get('http://api.bleauweb.net/player/'+this.props.params.user).then(function (promise) {
+      var data = promise.data.value.Inventory.value.value;
+      this.state.armor.head = data[36].id.value;
+      this.state.armor.chest = data[35].id.value;
+      this.state.armor.legs = data[34].id.value;
+      this.state.armor.feet = data[33].id.value;
+      this.setState(this.state);
+    }.bind(this));
     axios.get('http://api.bleauweb.net/data/translations').then(function (promise) {
+      console.log(this.state.armor);
       this.state.translations = promise.data;
       this.setState(this.state);
       axios.get('http://api.bleauweb.net/player/'+nextProps.params.user+'/stats').
@@ -42,6 +59,14 @@ var Profiles = React.createClass({
     }.bind(this));
   },
   componentDidMount: function () {
+    axios.get('http://api.bleauweb.net/player/'+this.props.params.user).then(function (promise) {
+      var data = promise.data.value.Inventory.value.value;
+      this.state.armor.head = data[36].id.value;
+      this.state.armor.chest = data[35].id.value;
+      this.state.armor.legs = data[34].id.value;
+      this.state.armor.feet = data[33].id.value;
+      this.setState(this.state);
+    }.bind(this));
     axios.get('http://api.bleauweb.net/data/translations').then(function (promise) {
       this.state.translations = promise.data;
       this.setState(this.state);
@@ -72,12 +97,25 @@ var Profiles = React.createClass({
 	render: function () {
 		return (
       <div>
-        <div className="col-md-8"></div>
-        <div className="col-md-4">
+        <div className="col-md-7">
+          <Panel header={this.state.user + '\'s Profile'}>
+            <div className="col-md-2">
+              <Item id={this.state.armor.head} position={'right'} title={'Head'} />
+              <Item id={this.state.armor.chest} position={'right'} title={'Chest'} />
+              <Item id={this.state.armor.legs} position={'right'} title={'Legs'} />
+              <Item id={this.state.armor.feet} position={'right'} title={'Feet'} />
+            </div>
+            <div className="col-md-8">
+              <center><Image width="128" height="256" src={'../data/skins/'+this.state.user+'.png'} /></center>
+            </div>
+            <div className="col-md-2"></div>
+          </Panel>
+        </div>
+        <div className="col-md-5">
           <Stats player={this.state.user} />
         </div>
         <div className="col-md-12">
-          <Panel header={this.state.user + '\'s Achevements'}>
+          <Panel header={'Achevements'}>
       			<Table className="table">
               <tbody>
                 {this.state._stats}
