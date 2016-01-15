@@ -24,7 +24,7 @@ We are working on getting feature parity with the previuse version, which was no
 
 This project is still in it's infincy, and badly needs tests. Project Atlantis is not considered stable enough for deployment for use on other servers. This will likely remain the same until a 1.0.0 release.
 
-Current Version: 0.0.3
+Current Version: 0.0.4
 
 ToDos
 * API Security (Critical)
