@@ -1,5 +1,6 @@
 var StargateManager = require('../managers/Stargate');
 var ErrorManager = require('../managers/Error');
+var cache = require('js-cache');
 
 module.exports.controller = function (app) {
 	app.all(function(req, res, next) {
@@ -15,35 +16,55 @@ module.exports.controller = function (app) {
 
 	app.get('/stargate', function (req, res) {
 		var type = req.query.type;
-		StargateManager.LoadStargateAddresses().then(function (doc) {
+		if (!cache.get('stargate:'+type)) {
+			StargateManager.LoadStargateAddresses().then(function (doc) {
+				if (type === 'computercraft') {
+					StargateManager.ComputerCraftify(doc).then(function (promise) {
+							cache.set('stargate:'+type, promise.data, 30000);
+							res.status(200).send(cache.get('stargate'+type));
+						});
+				} else {
+					cache.set('stargate:'+type, doc, 30000);
+					res.json(cache.get('stargate:'+type));
+				}
+			}.bind(this)).catch(function (err) {
+				var error = ErrorManager.handle(err);
+				res.status(error.status).send(error.message);
+			}.bind(this));
+		} else {
 			if (type === 'computercraft') {
-				StargateManager.ComputerCraftify(doc).then(function (promise) {
-						res.status(200).send(promise.data);
-					});
+				res.status(200).send(cache.get('stargate:'+type));
 			} else {
-				res.json(doc);
+				res.json(cache.get('stargate:'+type));
 			}
-		}).catch(function (err) {
-			var error = ErrorManager.handle(err);
-			res.status(error.status).send(error.message);
-		});
+		}
 	});
 
 	app.get('/stargate/:address', function (req, res) {
 		var type = req.query.type;
 		var address = req.params.address;
-		StargateManager.LoadStargateAddress(address).then(function (doc) {
+		if (!cache.get('stargate:'+type+':'+address)) {
+			StargateManager.LoadStargateAddress(address).then(function (doc) {
+				if (type === 'computercraft') {
+					StargateManager.ComputerCraftify(doc).then(function (promise) {
+							cache.set('stargate:'+type+':'+address, promise.data, 30000);
+							res.status(200).send(cache.get('stargate:'+type+':'+address));
+						}.bind(this));
+				} else {
+					cache.set('stargate:'+type+':'+address, doc, 30000);
+					res.json(cache.get('stargate:'+type+':'+address));
+				}
+			}.bind(this)).catch(function (err) {
+				var error = ErrorManager.handle(err);
+				res.status(error.status).send(error.message);
+			});
+		} else {
 			if (type === 'computercraft') {
-				StargateManager.ComputerCraftify(doc).then(function (promise) {
-						res.status(200).send(promise.data);
-					});
+				res.status(200).send(cache.get('stargate:'+type+':'+address));
 			} else {
-				res.json(doc);
+				res.json(cache.get('stargate:'+type+':'+address));
 			}
-		}).catch(function (err) {
-			var error = ErrorManager.handle(err);
-			res.status(error.status).send(error.message);
-		});
+		}
 	});
 
 	app.put('/stargate/:address', function (req, res) {
@@ -53,12 +74,14 @@ module.exports.controller = function (app) {
 		StargateManager.UpdateStargateAddress(address, content).then(function (doc) {
 			if (type === 'computercraft') {
 				StargateManager.ComputerCraftify(doc).then(function (promise) {
-						res.status(200).send(promise.data);
-					});
+						cache.set('stargate:'+type+':'+address, promise.data, 30000);
+						res.status(200).send(cache.get('stargate:'+type+':'+address));
+					}.bind(this));
 			} else {
-				res.json(doc);
+				cache.set('stargate:'+type+':'+address, doc, 30000);
+				res.json(cache.get('stargate:'+type+':'+address));
 			}
-		}).catch(function (err) {
+		}.bind(this)).catch(function (err) {
 			var error = ErrorManager.handle(err);
 			res.status(error.status).send(error.message);
 		});
@@ -71,12 +94,14 @@ module.exports.controller = function (app) {
 		StargateManager.CreateStargateAddress(address, content).then(function (doc) {
 			if (type === 'computercraft') {
 				StargateManager.ComputerCraftify(doc).then(function (promise) {
-						res.status(200).send(promise.data);
-					});
+						cache.set('stargate:'+type+':'+address, promise.data, 30000);
+						res.status(200).send(cache.get('stargate:'+type+':'+address));
+					}.bind(this));
 			} else {
-				res.json(doc);
+				cache.set('stargate:'+type+':'+address, doc, 30000);
+				res.json(cache.get('stargate:'+type+':'+address));
 			}
-		}).catch(function (err) {
+		}.bind(this)).catch(function (err) {
 			var error = ErrorManager.handle(err);
 			res.status(error.status).send(error.message);
 		});

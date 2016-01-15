@@ -1,3 +1,4 @@
+var cache = require('js-cache');
 var DatabaseManager = require('../managers/database');
 var StargateDB = DatabaseManager.getManager('blog');
 module.exports.controller = function (app) {
@@ -13,20 +14,30 @@ module.exports.controller = function (app) {
 	});
 
   app.get('/blog', function (req, res) {
-    StargateDB.allDocs({
-			include_docs: true
-		}).then(function (results) {
-			res.json(results.rows.map(function (ele, index) {
-        return ele.doc.data;
-      }));
-		}.bind(this));
+		if (!cache.get('blog')) {
+	    StargateDB.allDocs({
+				include_docs: true
+			}).then(function (results) {
+				cache.set('blog', results.rows.map(function (ele, index) {
+	        return ele.doc.data;
+	      }), 60000);
+				res.json(cache.get('blog'));
+			}.bind(this));
+		} else {
+			res.json(cache.get('blog'));
+		}
   });
 
   app.get('/blog/:id', function (req, res) {
     var id = req.params.id;
-    StargateDB.get(id).then(function (results) {
-			res.json(results.data);
-		}.bind(this));
+		if (!cache.get('blog:'+id)) {
+	    StargateDB.get(id).then(function (results) {
+				cache.set('blog:'+id, results.data, 60000);
+				res.json(cache.get('blog:'+id));
+			}.bind(this));
+		} else {
+			res.json(cache.get('blog:'+id));
+		}
   });
 
   app.put('/blog/:id', function (req, res) {
@@ -40,9 +51,10 @@ module.exports.controller = function (app) {
 				data: content
 			});
 		}.bind(this)).then(function(response) {
-			return StargateDB.get(id).then(function (results) {
-				res.json(results.data);
-			}.bind(this))
+			StargateDB.get(id).then(function (results) {
+					cache.set('blog:'+id, results.data, 60000);
+					res.json(cache.get('blog:'+id));
+			}.bind(this));
 		}.bind(this));
   });
 
@@ -53,10 +65,11 @@ module.exports.controller = function (app) {
     StargateDB.put({
 			_id: id,
 			data: content
-		}).then(function (response) {
-			return StargateDB.get(id).then(function (results) {
-				res.json(results.data);
-			}.bind(this))
+		}).bind(this).then(function(response) {
+			StargateDB.get(id).then(function (results) {
+					cache.set('blog:'+id, results.data, 60000);
+					res.json(cache.get('blog:'+id));
+			}.bind(this));
 		}.bind(this));
   });
 };
