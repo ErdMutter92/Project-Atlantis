@@ -17,7 +17,7 @@ var Blogs = React.createClass({
 						<Entry
 							title={entry.title}
 							contents={entry.content}
-							authors={['erdmutter92']}
+							authors={[entry.authors]}
 							created={hdate.prettyPrint(new Date(entry.created))}
 							key={index} />
 					);

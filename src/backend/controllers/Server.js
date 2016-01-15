@@ -143,6 +143,15 @@ module.exports.controller = function (app) {
 			axios.get('http://bleauweb.net/minecraft/api/status.php?version=0.2').then(function (promise) {
 	      var status = promise.data;
 	      status.servername = 'Project Atlantis';
+
+				// Check if we are offline, if so set some defaults.
+				if (status.maxplayers === undefined) {
+					status.status = 'offline';
+					status.version = '1.7.10';
+					status.maxplayers = 0;
+					status.motd = 'We are currently offline...';
+				}
+
 				cache.set('server:status', status, 30000);
 	      res.json(cache.get('server:status'));
 	    });

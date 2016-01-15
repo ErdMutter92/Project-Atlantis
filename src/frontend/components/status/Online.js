@@ -29,7 +29,7 @@ var Online = React.createClass({
 	},
 	render: function () {
 		return (
-			<Panel header={'Currently Online ('+ this.state.players.length +'/'+ this.state.max +')'}>
+			<Panel header={'Currently '+ this.state.players.length +' of '+ this.state.max +' Online'}>
 				<Nav bsStyle="pills" stacked>
 					{this.stringify(this.state.players)}
 			  </Nav>
