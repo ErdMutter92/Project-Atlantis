@@ -1,6 +1,6 @@
 {
   "name": "project-atlantis",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Project Atlantis is a Minecraft server web portal. The aim of the application is to build a website that is both useful and easy to use for acquiring information about the Minecraft server it is attached to.",
   "main": "bundle.js",
   "scripts": {
