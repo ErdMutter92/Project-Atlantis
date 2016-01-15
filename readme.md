@@ -9,7 +9,7 @@ Current Feature Set
 * Server Status Information
 * Player Profiles
 * Screenshot Gallery
-* Node backend /w Caching
+* Node (ExpressJs) backend /w Caching
  
 We are working on getting feature parity with the previuse version, which was not released online. The feature set of version 0.0.2 are as followed:
 * ~LanteaCraft Stargate Database~
