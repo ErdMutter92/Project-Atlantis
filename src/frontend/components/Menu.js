@@ -22,7 +22,7 @@ var Menu = React.createClass({
 		};
 	},
 	componentDidMount: function () {
-		axios.get('http://localhost:3333/server/status').then(function (promise) {
+		axios.get('http://api.bleauweb.net/server/status').then(function (promise) {
 			this.setState({
 				servername: promise.data.servername,
 				motd: promise.data.motd,
