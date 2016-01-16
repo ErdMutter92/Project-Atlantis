@@ -14,6 +14,33 @@ module.exports.controller = function (app) {
 	  next();
 	});
 
+	/**
+	 * @api {get} /stargate Request All Stargates
+	 * @apiName getStargates
+	 * @apiGroup Stargate
+	 * @apiVersion 0.0.4
+	 *
+	 * @apiParamExample {json} Response-Example:
+	 * [
+	 *     {
+	 *       "address": "AAA8AABAA",
+	 *       "title": "Atlantis Home Base",
+	 *       "discription": "This is the home base for the people of atlantis, the spot where it all started!",
+	 *       "aliases": [
+	 *            "home",
+	 *            "hq",
+	 *            "atlantis",
+	 *       ]
+	 *     }
+	 * ]
+	 *
+	 * @apiSuccess {array} stargates
+	 * @apiSuccess {object} stargates.stargate
+	 * @apiSuccess {string} stargates.stargate.address The unique stargate address.
+	 * @apiSuccess {string} stargates.stargate.title The title assigned to the stargate.
+	 * @apiSuccess {string} stargates.stargate.discription Discription of the stargate location.
+	 * @apiSuccess {string[]} stargates.stargate.aliases Array of stargate aliases for the address.
+	 */
 	app.get('/stargate', function (req, res) {
 		var type = req.query.type;
 		if (!cache.get('stargate:'+type)) {
@@ -40,6 +67,30 @@ module.exports.controller = function (app) {
 		}
 	});
 
+	/**
+	 * @api {get} /stargate/:address Request Single Stargate
+	 * @apiName getStargate
+	 * @apiGroup Stargate
+	 * @apiVersion 0.0.4
+	 *
+	 * @apiParamExample {json} Response-Example:
+	 *     {
+	 *       "address": "AAA8AABAA",
+	 *       "title": "Atlantis Home Base",
+	 *       "discription": "This is the home base for the people of atlantis, the spot where it all started!",
+	 *       "aliases": [
+	 *            "home",
+	 *            "hq",
+	 *            "atlantis",
+	 *       ]
+	 *     }
+	 *
+	 * @apiSuccess {object} stargate
+	 * @apiSuccess {string} stargate.address The unique stargate address.
+	 * @apiSuccess {string} stargate.title The title assigned to the stargate.
+	 * @apiSuccess {string} stargate.discription Discription of the stargate location.
+	 * @apiSuccess {string[]} stargate.aliases Array of stargate aliases for the address.
+	 */
 	app.get('/stargate/:address', function (req, res) {
 		var type = req.query.type;
 		var address = req.params.address;
@@ -67,6 +118,36 @@ module.exports.controller = function (app) {
 		}
 	});
 
+	/**
+	 * @api {put} /stargate/:address Update Single Stargate
+	 * @apiName putStargate
+	 * @apiGroup Stargate
+	 * @apiVersion 0.0.4
+	 *
+	 * @apiParam {object} stargate
+	 * @apiParam {string} stargate.address The unique stargate address.
+	 * @apiParam {string} stargate.title The title assigned to the stargate.
+	 * @apiParam {string} stargate.discription Discription of the stargate location.
+	 * @apiParam {string[]} stargate.aliases Array of stargate aliases for the address.
+	 *
+	 * @apiParamExample {json} Response-Example:
+	 *     {
+	 *       "address": "AAA8AABAA",
+	 *       "title": "Atlantis Home Base",
+	 *       "discription": "This is the home base for the people of atlantis, the spot where it all started!",
+	 *       "aliases": [
+	 *            "home",
+	 *            "hq",
+	 *            "atlantis",
+	 *       ]
+	 *     }
+	 *
+	 * @apiSuccess {object} stargate
+	 * @apiSuccess {string} stargate.address The unique stargate address.
+	 * @apiSuccess {string} stargate.title The title assigned to the stargate.
+	 * @apiSuccess {string} stargate.discription Discription of the stargate location.
+	 * @apiSuccess {string[]} stargate.aliases Array of stargate aliases for the address.
+	 */
 	app.put('/stargate/:address', function (req, res) {
 		var type = req.query.type;
 		var address = req.params.address;
@@ -87,6 +168,36 @@ module.exports.controller = function (app) {
 		});
 	});
 
+	/**
+	 * @api {post} /stargate/:address Create Single Stargate
+	 * @apiName postStargate
+	 * @apiGroup Stargate
+	 * @apiVersion 0.0.4
+	 *
+	 * @apiParam {object} stargate
+	 * @apiParam {string} stargate.address The unique stargate address.
+	 * @apiParam {string} stargate.title The title assigned to the stargate.
+	 * @apiParam {string} stargate.discription Discription of the stargate location.
+	 * @apiParam {string[]} stargate.aliases Array of stargate aliases for the address.
+	 *
+	 * @apiParamExample {json} Response-Example:
+	 *     {
+	 *       "address": "AAA8AABAA",
+	 *       "title": "Atlantis Home Base",
+	 *       "discription": "This is the home base for the people of atlantis, the spot where it all started!",
+	 *       "aliases": [
+	 *            "home",
+	 *            "hq",
+	 *            "atlantis",
+	 *       ]
+	 *     }
+	 *
+	 * @apiSuccess {object} stargate
+	 * @apiSuccess {string} stargate.address The unique stargate address.
+	 * @apiSuccess {string} stargate.title The title assigned to the stargate.
+	 * @apiSuccess {string} stargate.discription Discription of the stargate location.
+	 * @apiSuccess {string[]} stargate.aliases Array of stargate aliases for the address.
+	 */
 	app.post('/stargate/:address', function (req, res) {
 		var type = req.query.type;
 		var address = req.params.address;

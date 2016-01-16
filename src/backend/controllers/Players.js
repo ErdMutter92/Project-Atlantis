@@ -15,12 +15,13 @@ module.exports.controller = function (app) {
   	  next();
   	});
 
-    /*  GET /player/{user}/profile
-     *  @params user string
-     *  Takes the user name and turns it into a uuid. Response contains
-     *  the json data from mojangs profile api. This response is cached
-     *  for a long time as their server rejects repetative requests.
-     */
+    /**
+  	 * @api {get} /player/:user/profile Request User Profile
+  	 * @apiName getPlayerProfile
+  	 * @apiGroup Player
+  	 * @apiVersion 0.0.4
+  	 * @apiDescription Returns the data from the mojang api for a player's profile.
+  	 */
     app.get('/player/:user/profile', function (req, res) {
   		var player = req.params.user;
       if (!cache.get('player:'+player)) {
@@ -35,10 +36,13 @@ module.exports.controller = function (app) {
       res.json(cache.get('player:'+player+':profile'));
     });
 
-    /*  GET /player/{user}
-     *  @params user string
-     *  reads through the requested player's dat file and converts it to
-     *  json before sending that data back in a response.
+     /**
+     * @api {get} /player/:user Request User Data
+     * @apiName getPlayerData
+     * @apiGroup Player
+     * @apiVersion 0.0.4
+     * @apiDescription reads through the requested player's dat file and converts it to
+     * json before sending that data back in a response.
      */
     app.get('/player/:user', function (req, res) {
   		var player = req.params.user;
@@ -66,12 +70,14 @@ module.exports.controller = function (app) {
       }
     });
 
-
-    /*  GET /player/{user}/status
-     *  @params user string
-     *  Reads the players status file and returns that, this contains all
-     *  of the data for statistics, such as kills and what the player has
-     *  done in relationship to blocks.
+     /**
+     * @api {get} /player/:user/stats Request User Stats
+     * @apiName getPlayerStats
+     * @apiGroup Player
+     * @apiVersion 0.0.4
+     * @apiDescription Reads the players status file and returns that, this contains all
+     * of the data for statistics, such as kills and what the player has
+     * done in relationship to blocks.
      */
     app.get('/player/:user/stats', function (req, res) {
   		var player = req.params.user;

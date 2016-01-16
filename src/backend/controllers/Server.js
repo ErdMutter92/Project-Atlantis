@@ -137,7 +137,25 @@ module.exports.controller = function (app) {
 		}
 	});
 
-	// cached 30 seconds
+	/**
+	* @api {get} /server/status Request Server Status
+	* @apiName getServerStats
+	* @apiGroup Server
+	* @apiVersion 0.0.4
+	* @apiDescription This will always return a server status, the status field
+	* will inform you if the server is 'online' or 'offline'. The other data may
+	* or may not be there in the response.
+	* @apiParamExample {json} Request-Example:
+	* {
+	* 	"version": "1.7.10",
+	* 	"players": 0,
+	* 	"motd": "Mission: Seed the world with Stargates....",
+	* 	"ping": 14,
+	* 	"discription":"The discription of our minecraft server will go here once OUGuy392 writes it!",
+	* 	"status":"online",
+	* 	"servername":"Project Atlantis"
+	* }
+	*/
   app.get('/server/status', function (req, res) {
 		if (!cache.get('server:status')) {
 			axios.get('http://bleauweb.net/minecraft/api/status.php?version=0.2').then(function (promise) {
@@ -160,7 +178,21 @@ module.exports.controller = function (app) {
 		}
   });
 
-	// Cached 1 hour
+	/**
+	* @api {get} /server/mods Request Server Mod List
+	* @apiName getServerMods
+	* @apiGroup Server
+	* @apiVersion 0.0.4
+	* @apiDescription Returns a list of all the mods installed on the server along
+	* with the version of that mod. Returns as an object of objects.
+	*
+	* @apiSuccess {object} status
+	* @apiSuccess {string} status.type The type of mod loader used on server.
+	* @apiSuccess {object} status.modList
+	* @apiSuccess {object} status.modList.obj
+	* @apiSuccess {string} status.modList.obj.modid The registered name of the mod.
+	* @apiSuccess {string} status.modList.obj.version The registered version of the mod.
+	*/
   app.get('/server/mods', function (req, res) {
 		if (!cache.get('server:mods')) {
 	    axios.get('http://bleauweb.net/minecraft/api/status.php?raw=true').then(function (promise) {
