@@ -1,4 +1,6 @@
 import React from 'react';
+import marked from 'marked';
+import striptags from 'striptags';
 
 var Entry = React.createClass({
 	propTypes: {
@@ -7,12 +9,15 @@ var Entry = React.createClass({
 		authors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 		created: React.PropTypes.string.isRequired
 	},
+	parseMarkdown: function (content) {
+		content = striptags(content);
+		return {__html: marked(content)};
+	},
 	render: function () {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-heading">{this.props.title}</div>
-				<div className="panel-body">
-					{this.props.contents}
+				<div className="panel-body" dangerouslySetInnerHTML={this.parseMarkdown(this.props.contents)}>
 				</div>
 				<div className="panel-footer">
 					<div className="row">
