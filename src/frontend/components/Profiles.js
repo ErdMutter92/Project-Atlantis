@@ -100,13 +100,9 @@ var Profiles = React.createClass({
         <div className="col-md-7">
           <Panel header={this.state.user + '\'s Profile'}>
             <div className="col-md-2">
-              <Item id={this.state.armor.head} position={'right'} title={'Head'} />
-              <Item id={this.state.armor.chest} position={'right'} title={'Chest'} />
-              <Item id={this.state.armor.legs} position={'right'} title={'Legs'} />
-              <Item id={this.state.armor.feet} position={'right'} title={'Feet'} />
             </div>
             <div className="col-md-8">
-              <center><Image width="128" height="256" src={'../data/skins/'+this.state.user+'.png'} /></center>
+              <center><Image width="128" height="256" src={'./data/skins/'+this.state.user+'.png'} /></center>
             </div>
             <div className="col-md-2"></div>
           </Panel>
