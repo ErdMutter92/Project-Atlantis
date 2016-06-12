@@ -1,6 +1,6 @@
 Project Atlantis
 -----------------------------------------------------------
-Project Atlantis is a Minecraft server web portal. The aim of the application is to build a website that is both useful and easy to use for aquiring information about the Minecraft server it is attached to. 
+Project Atlantis is a Minecraft server web portal. The aim of the application is to build a website that is both useful and easy to use for acquiring information about the Minecraft server it is attached to. 
 
 Current Feature Set
 * LanteaCraft Stargate Database
